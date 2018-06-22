@@ -156,6 +156,10 @@ def get_spg_df(pg_path=PG_PATH):
 
 
 def get_supplier_spg_df(supplier_path=SUPPLIER_PATH, spg_path=SPG_PATH):
+    """
+    supplier_df and spg_df have N:M relationship. Create a join table between them. 
+    :return: supplier_spg_df, has columns=['supplier_spg_id', 'supplier_id', 'spg_id']
+    """
     supplier_df = pd.read_excel(supplier_path)[['supplier_id', 'supplier_url', 'supplier_code']]
     supplier_df = supplier_df[pd.notnull(supplier_df['supplier_code'])]
     supplier_spg_df = pd.DataFrame(columns=['spg_url_key', 'supplier_id'])

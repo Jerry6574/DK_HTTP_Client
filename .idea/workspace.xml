@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6f0c2f9d-3cc8-4063-a3a1-b6262f248d3b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/spg.xlsx" afterPath="$PROJECT_DIR$/data/spg.xlsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/supplier.xlsx" afterPath="$PROJECT_DIR$/data/supplier.xlsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/DK_HTTP_Client.iml" afterPath="$PROJECT_DIR$/.idea/DK_HTTP_Client.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/preprocessing.py" afterPath="$PROJECT_DIR$/preprocessing.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utils.py" afterPath="$PROJECT_DIR$/utils.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -23,8 +17,8 @@
       <file leaf-file-name="preprocessing.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/preprocessing.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="103">
-              <caret line="157" column="4" lean-forward="true" selection-start-line="157" selection-start-column="4" selection-end-line="157" selection-end-column="23" />
+            <state relative-caret-position="597">
+              <caret line="170" column="63" lean-forward="true" selection-start-line="170" selection-start-column="63" selection-end-line="170" selection-end-column="63" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
                 <element signature="e#587#967#0" expanded="false" />
@@ -477,8 +471,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/preprocessing.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="103">
-          <caret line="157" column="4" lean-forward="true" selection-start-line="157" selection-start-column="4" selection-end-line="157" selection-end-column="23" />
+        <state relative-caret-position="597">
+          <caret line="170" column="63" lean-forward="true" selection-start-line="170" selection-start-column="63" selection-end-line="170" selection-end-column="63" />
           <folding>
             <element signature="e#0#30#0" expanded="true" />
             <element signature="e#587#967#0" expanded="false" />
