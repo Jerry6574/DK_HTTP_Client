@@ -5,7 +5,7 @@ import bs4
 
 
 def get_soup(url):
-    print(url)
+    print('url:', url)
     session = requests.Session()
     retry = Retry(connect=5, backoff_factor=2)
     adapter = HTTPAdapter(max_retries=retry)
@@ -13,6 +13,6 @@ def get_soup(url):
     session.mount('https://', adapter)
     req = session.get(url)
     soup = bs4.BeautifulSoup(req.content, 'lxml')
-    print(req.status_code)
+    print('status_code:', req.status_code)
     return req.status_code, soup
 
