@@ -4,7 +4,7 @@ import pandas as pd
 import re
 import time
 from utils import get_soup
-import numpy as np
+
 
 SUPPLIER_PATH = r"data/supplier.xlsx"
 DIGIKEY_HOME_PAGE = "https://www.digikey.com"
@@ -13,7 +13,7 @@ SPG_PATH = r"data/spg.xlsx"
 SUPPLIER_SPG_PATH = r'data/supplier_spg.xlsx'
 PRODUCT_INDEX_URL = 'https://www.digikey.com/products/en'
 SUPPLIER_CENTER_URL = 'https://www.digikey.com/en/supplier-centers'
-CHROMEDRIVER_PATH = r"lib\chromedriver"
+CHROMEDRIVER_PATH = r"lib/chromedriver"
 
 
 def init_webdriver(chromedriver_path=CHROMEDRIVER_PATH):
@@ -34,7 +34,7 @@ def get_supplier_df(supplier_center_url=SUPPLIER_CENTER_URL):
     """
     Parse HTML of the supplier_center page and build a DataFrame of supplier data.
     :return: supplier_df, supplier DataFrame, 
-    has columns=['supplier_name', 'supplier_url', 'supplier_code', 'supplier_id']
+    has columns=['supplier', 'supplier_url', 'supplier_code', 'supplier_id']
     """
     browser = init_webdriver()
     browser.get(supplier_center_url)
@@ -42,18 +42,18 @@ def get_supplier_df(supplier_center_url=SUPPLIER_CENTER_URL):
     # Collect a list of supplier anchor tags.
     supplier_anchors = browser.find_elements_by_class_name('supplier-listing-link')
 
-    # Extract a list supplier_name and supplier_url from supplier_anchors.
+    # Extract a list supplier and supplier_url from supplier_anchors.
     supplier_list = []
 
     for anchor in supplier_anchors:
-        supplier_name = anchor.text.replace('/', '_')
+        supplier = anchor.text.replace('/', '_')
         supplier_url = anchor.get_attribute('href')
         supplier_url_key = supplier_url.split('/')[-1]
-        supplier_list.append([supplier_name, supplier_url, supplier_url_key])
+        supplier_list.append([supplier, supplier_url, supplier_url_key])
 
     browser.quit()
 
-    supplier_df = pd.DataFrame(supplier_list, columns=['supplier_name', 'supplier_url', 'supplier_url_key'])
+    supplier_df = pd.DataFrame(supplier_list, columns=['supplier', 'supplier_url', 'supplier_url_key'])
     supplier_codes = []
     for url in supplier_df['supplier_url']:
         supplier_code = get_supplier_code(url)
@@ -115,7 +115,7 @@ def get_pg_df(product_index_url=PRODUCT_INDEX_URL):
 
         pg_list.append([product_group, pg_url, pg_url_key])
 
-    pg_df = pd.DataFrame(pg_list, columns=['product_group', 'pg_url', 'pg_url_key'])
+    pg_df = pd.DataFrame(pg_list, columns=['pg', 'pg_url', 'pg_url_key'])
     pg_df.index += 1
     pg_df['pg_id'] = pg_df.index
 
@@ -152,6 +152,7 @@ def get_spg_df(pg_path=PG_PATH):
     spg_df['spg_id'] = spg_df.index
 
     spg_df = spg_df.merge(pg_lookup, on='pg_url_key', how='left')
+    spg_df.drop(column='pg_url_key', inplace=True)
     return spg_df
 
 
@@ -180,7 +181,7 @@ def get_supplier_spg_df(supplier_path=SUPPLIER_PATH, spg_path=SPG_PATH):
         time.sleep(0.1)
 
     supplier_spg_df = supplier_spg_df.merge(spg_df, on='spg_url_key', how='left')
-    supplier_spg_df.drop(columns=['spg_url_key'])
+    supplier_spg_df.drop(columns=['spg_url_key'], inplace=True)
 
     supplier_spg_df.index += 1
     supplier_spg_df['supplier_spg_id'] = supplier_spg_df.index
@@ -189,22 +190,25 @@ def get_supplier_spg_df(supplier_path=SUPPLIER_PATH, spg_path=SPG_PATH):
 
 
 def get_prelim_data():
-    # supplier_df = get_supplier_df()
-    # supplier_df.to_excel(SUPPLIER_PATH)
-    #
-    # pg_df = get_pg_df()
-    # pg_df.to_excel(PG_PATH)
-    #
-    # spg_df = get_spg_df()
-    # spg_df.to_excel(SPG_PATH)
+    """
+    Execute all functions that get preliminary data in the order of correct dependency. 
+    """
+    supplier_df = get_supplier_df()
+    supplier_df.to_excel(SUPPLIER_PATH)
+
+    pg_df = get_pg_df()
+    pg_df.to_excel(PG_PATH)
+
+    spg_df = get_spg_df()
+    spg_df.to_excel(SPG_PATH)
 
     supplier_spg_df = get_supplier_spg_df()
-    supplier_spg_df.to_excel('supplier_spg.xlsx')
+    supplier_spg_df.to_excel(SUPPLIER_SPG_PATH)
 
 
-def main():
-    get_prelim_data()
-
-
-if __name__ == '__main__':
-    main()
+# def main():
+#     get_prelim_data()
+#
+#
+# if __name__ == '__main__':
+#     main()
