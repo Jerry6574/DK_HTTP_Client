@@ -93,26 +93,10 @@ class DKDB:
         DKDB.insert_supplier(self)
         DKDB.insert_supplier_spg(self)
 
-    def inner_join_pg_spg(self):
-        conn = sqlite3.connect(self.db_path)
-        inner_join_sql = "SELECT sub_product_group.spg_id, " \
-                         "product_group.pg_url_key, " \
-                         "sub_product_group.spg_url, " \
-                         "sub_product_group.spg_url_key FROM " \
-                         "product_group INNER JOIN sub_product_group " \
-                         "ON sub_product_group.pg_id = product_group.pg_id"
-        inner_join_pg_spg_df = pd.read_sql(inner_join_sql, conn)
 
-        conn.commit()
-        conn.close()
-        return inner_join_pg_spg_df
-
-
-def main():
-    dkdb = DKDB()
-    inner_join_pg_spg_df = dkdb.inner_join_pg_spg()
-    inner_join_pg_spg_df.to_excel("data/inner_join_pg_spg.xlsx")
-
-
-if __name__ == '__main__':
-    main()
+# def main():
+#     dkdb = DKDB()
+#
+#
+# if __name__ == '__main__':
+#     main()
