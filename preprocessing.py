@@ -1,9 +1,14 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.common.exceptions import NoSuchElementException
 import pandas as pd
 import re
 import time
-from utils import get_soup
+import math
+from requests.adapters import HTTPAdapter
+from urllib3.util import Retry
+import requests
+import bs4
 
 
 SUPPLIER_PATH = r"data/supplier.xlsx"
@@ -14,6 +19,135 @@ SUPPLIER_SPG_PATH = r'data/supplier_spg.xlsx'
 PRODUCT_INDEX_URL = 'https://www.digikey.com/products/en'
 SUPPLIER_CENTER_URL = 'https://www.digikey.com/en/supplier-centers'
 CHROMEDRIVER_PATH = r"lib/chromedriver"
+
+
+def get_soup(url):
+    """
+    Given a url, send an http request.
+    :return: resp.status_code, soup
+    resp.status_code is the response's status code, i.e. 200: success, 404: Not Found, 403: Forbidden, etc.
+    soup is a BeautifulSoup object of the input url.
+    """
+    print('url:', url)
+    session = requests.Session()
+    retry = Retry(connect=5, backoff_factor=2)
+    adapter = HTTPAdapter(max_retries=retry)
+
+    session.mount('http://', adapter)
+    session.mount('https://', adapter)
+
+    resp = session.get(url)
+    soup = bs4.BeautifulSoup(resp.content, 'lxml')
+
+    print('status_code:', resp.status_code)
+    return resp.status_code, soup
+
+
+class Queue:
+    """
+    Implement a FIFO queue data structure.
+    """
+    def __init__(self, initial_queue=None):
+        if initial_queue is None:
+            self.items = []
+        else:
+            self.items = initial_queue
+
+    def empty(self):
+        return self.items == []
+
+    def enqueue(self, item):
+        self.items.insert(0, item)
+
+    def dequeue(self):
+        return self.items.pop()
+
+    def size(self):
+        return len(self.items)
+
+    def __str__(self):
+        return str(self.items)
+
+
+def select_active_spg(inner_join_df_in):
+    inner_join_df_out = inner_join_df_in
+    inner_join_df_out['part-status'] = 'Active'
+    inner_join_df_out['index'] = inner_join_df_out.index
+
+    spg_list = inner_join_df_out[['index', 'spg_url', 'supplier_code']].values.tolist()
+    spg_queue = Queue(spg_list)
+    enqueue_counter = 0
+
+    while not spg_queue.empty():
+        spg_row = spg_queue.dequeue()
+        [index, spg_url, supplier_code] = spg_row
+        supplier_spg_url = spg_url + "?v=" + supplier_code
+
+        try:
+            supplier_spg_status = find_supplier_spg_status(supplier_spg_url)
+            if supplier_spg_status == 'Obsolete':
+                inner_join_df_out.at[index, 'part-status'] = 'Obsolete'
+
+        except NoSuchElementException:
+            spg_queue.enqueue(spg_row)
+            enqueue_counter += 1
+            print('enqueue_counter: ', enqueue_counter)
+
+    inner_join_df_out.drop(columns='index', inplace=True)
+    inner_join_df_out = inner_join_df_out[inner_join_df_out['part-status'] == 'Active']
+
+    return inner_join_df_out
+
+
+def find_supplier_spg_status(supplier_spg_url):
+
+    browser = init_webdriver()
+    browser.get(supplier_spg_url)
+    try:
+        part_status = "".join(browser.find_element_by_id('part-status').text.split())
+    except NoSuchElementException:
+
+        status_xpath = '//*[@id="prod-att-table"]//*/td[contains(text(), "{0}") or contains(text(), "{1}")]'.format("Obsolete", "Active")
+        part_status = "".join(browser.find_element_by_xpath(status_xpath).text.split())
+
+    print('supplier_spg_url', supplier_spg_url, 'is', part_status)
+    return part_status
+
+
+def get_num_page(inner_join_df_in):
+    inner_join_df_out = inner_join_df_in
+    inner_join_df_out['num_page'] = 0
+    inner_join_df_out['index'] = inner_join_df_out.index
+
+    spg_url_list = inner_join_df_out[['index', 'spg_url']].values.tolist()
+
+    spg_url_queue = Queue(spg_url_list)
+    enqueue_counter = 0
+
+    while not spg_url_queue.empty():
+        spg_row = spg_url_queue.dequeue()
+        [index, spg_url] = spg_row
+
+        browser = init_webdriver()
+
+        try:
+            browser.get(spg_url)
+
+            num_item = int(browser.find_element_by_id('matching-records-count').text.replace(',', ''))
+            num_page = math.ceil(num_item / 500)
+
+            print('spg_url', spg_url, 'num_page', num_page)
+            inner_join_df_out.at[index, 'num_page'] = num_page
+        except NoSuchElementException:
+            spg_url_queue.enqueue(spg_row)
+            enqueue_counter += 1
+            print('enqueue_counter: ', enqueue_counter)
+
+        browser.quit()
+
+    inner_join_df_out.drop(columns='index', inplace=True)
+
+    return inner_join_df_out
 
 
 def init_webdriver(chromedriver_path=CHROMEDRIVER_PATH):
@@ -156,16 +290,21 @@ def get_spg_df(pg_path=PG_PATH):
     return spg_df
 
 
-def get_supplier_spg_df(supplier_path=SUPPLIER_PATH, spg_path=SPG_PATH):
+def get_supplier_spg_df(supplier_path=SUPPLIER_PATH, spg_path=SPG_PATH, pg_path=PG_PATH):
     """
     supplier_df and spg_df have N:M relationship. Create a join table between them. 
     :return: supplier_spg_df, has columns=['supplier_spg_id', 'supplier_id', 'spg_id']
     """
     supplier_df = pd.read_excel(supplier_path)[['supplier_id', 'supplier_url', 'supplier_code']]
     supplier_df = supplier_df[pd.notnull(supplier_df['supplier_code'])]
-    supplier_spg_df = pd.DataFrame(columns=['spg_url_key', 'supplier_id'])
 
-    spg_df = pd.read_excel(spg_path)[['spg_url_key', 'spg_id']]
+    # 'pg_url_key' and 'spg_url_key' form a list of unique keys
+    supplier_spg_df = pd.DataFrame(columns=['pg_url_key', 'spg_url_key', 'supplier_id'])
+
+    spg_df = pd.read_excel(spg_path)[['spg_url_key', 'spg_id', 'pg_id']]
+    pg_df = pd.read_excel(pg_path)[['pg_url_key', 'pg_id']]
+
+    spg_df = spg_df.merge(pg_df, on='pg_id', how='left')
 
     for supplier_id_url in supplier_df.itertuples(index=True, name='Pandas'):
         supplier_id = getattr(supplier_id_url, 'supplier_id')
@@ -173,15 +312,16 @@ def get_supplier_spg_df(supplier_path=SUPPLIER_PATH, spg_path=SPG_PATH):
 
         _, supplier_soup = get_soup(supplier_url)
         all_li = supplier_soup.find('table', attrs={'id': 'table_arw_wrapper'}).find_all('li')
-        temp_spg_list = [li.find('a')['href'].split('/')[-2] for li in all_li]
-        temp_spg_df = pd.DataFrame(temp_spg_list, columns=['spg_url_key'])
+        temp_spg_list = [[li.find('a')['href'].split('/')[-3],
+                          li.find('a')['href'].split('/')[-2]] for li in all_li]
+        temp_spg_df = pd.DataFrame(temp_spg_list, columns=['pg_url_key', 'spg_url_key'])
         temp_spg_df['supplier_id'] = supplier_id
         supplier_spg_df = supplier_spg_df.append(temp_spg_df)
 
         time.sleep(0.1)
 
-    supplier_spg_df = supplier_spg_df.merge(spg_df, on='spg_url_key', how='left')
-    supplier_spg_df.drop(columns=['spg_url_key'], inplace=True)
+    supplier_spg_df = supplier_spg_df.merge(spg_df, on=['pg_url_key', 'spg_url_key'], how='left')
+    supplier_spg_df.drop(columns=['pg_url_key', 'spg_url_key', 'pg_id'], inplace=True)
 
     supplier_spg_df.index += 1
     supplier_spg_df['supplier_spg_id'] = supplier_spg_df.index
@@ -189,10 +329,7 @@ def get_supplier_spg_df(supplier_path=SUPPLIER_PATH, spg_path=SPG_PATH):
     return supplier_spg_df
 
 
-def get_prelim_data():
-    """
-    Execute all functions that get preliminary data in the order of correct dependency. 
-    """
+def get_prelim_data_all():
     supplier_df = get_supplier_df()
     supplier_df.to_excel(SUPPLIER_PATH)
 
@@ -206,9 +343,63 @@ def get_prelim_data():
     supplier_spg_df.to_excel(SUPPLIER_SPG_PATH)
 
 
-# def main():
-#     get_prelim_data()
-#
-#
-# if __name__ == '__main__':
-#     main()
+def get_prelim_data_pg():
+    pg_df = get_pg_df()
+    pg_df.to_excel(PG_PATH)
+
+
+def get_prelim_data_spg():
+    try:
+        spg_df = get_spg_df()
+        spg_df.to_excel(SPG_PATH)
+
+    except FileNotFoundError:
+        get_prelim_data_pg()
+        spg_df = get_spg_df()
+        spg_df.to_excel(SPG_PATH)
+
+
+def get_prelim_data_supplier():
+    supplier_df = get_supplier_df()
+    supplier_df.to_excel(SUPPLIER_PATH)
+
+
+def get_prelim_data_supplier_spg():
+    try:
+        supplier_spg_df = get_supplier_spg_df()
+        supplier_spg_df.to_excel(SUPPLIER_SPG_PATH)
+
+    except FileNotFoundError:
+        get_prelim_data_all()
+
+
+def get_prelim_data(mode='All'):
+    """
+    Execute all functions that get preliminary data in the order of correct dependency. 
+    """
+    if mode == 'All':
+        get_prelim_data_all()
+
+    elif mode == 'supplier':
+        get_prelim_data_supplier()
+
+    elif mode == 'pg':
+        get_prelim_data_pg
+
+    elif mode == 'spg':
+        get_prelim_data_spg()
+
+    elif mode == 'supplier_spg':
+        get_prelim_data_supplier_spg()
+
+    else:
+        print('Mode "{0}" selection was invalid.'.format(mode))
+        print('Please try again')
+
+
+def main():
+    get_prelim_data()
+
+
+if __name__ == '__main__':
+    main()

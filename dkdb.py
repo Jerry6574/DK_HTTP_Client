@@ -94,9 +94,9 @@ class DKDB:
         DKDB.insert_supplier_spg(self)
 
 
-# def main():
-#     dkdb = DKDB()
-#
-#
-# if __name__ == '__main__':
-#     main()
+def main():
+    dkdb = DKDB()
+
+
+if __name__ == '__main__':
+    main()

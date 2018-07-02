@@ -1,11 +1,8 @@
 import sqlite3
 import pandas as pd
 import dkdb
-from utils import get_num_page
+from preprocessing import get_num_page
 import preprocessing
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-import math
 import os
 import datetime
 
@@ -22,12 +19,16 @@ def query_spg_by_supplier(db_path, supplier_id):
     inner_join_sql = "SELECT sub_product_group.spg_id, " \
                      "product_group.pg_url_key, " \
                      "sub_product_group.spg_url, " \
-                     "sub_product_group.spg_url_key FROM " \
-                     "product_group INNER JOIN sub_product_group " \
+                     "sub_product_group.spg_url_key, " \
+                     "supplier.supplier_code " \
+                     "FROM product_group INNER JOIN sub_product_group " \
                      "ON sub_product_group.pg_id = product_group.pg_id " \
                      "INNER JOIN supplier_spg ON sub_product_group.spg_id = supplier_spg.spg_id " \
+                     "INNER JOIN supplier ON supplier.supplier_id = supplier_spg.supplier_id " \
                      "WHERE supplier_spg.supplier_id = {0}".format(supplier_id)
+
     inner_join_df = pd.read_sql(inner_join_sql, conn)
+    inner_join_df = preprocessing.select_active_spg(inner_join_df)
     inner_join_df = get_num_page(inner_join_df)
 
     conn.commit()
