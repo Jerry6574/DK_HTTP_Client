@@ -32,7 +32,7 @@ def get_abs_spg_dirs(import_path):
     return abs_spg_dirs
 
 
-def concat_spg_csv(abs_spg_dir):
+def concat_spg_csv(abs_spg_dir, concat_xl_dir):
 
     df_list = []
     for root, dirs, files in os.walk(abs_spg_dir):
@@ -44,13 +44,13 @@ def concat_spg_csv(abs_spg_dir):
     concat_df = pd.concat(df_list, ignore_index=True)
     concat_filename = "_".join(abs_spg_dir.split('\\')[-2:]) + ".xlsx"
 
-    concat_df.to_excel(os.path.join(abs_spg_dir, concat_filename))
+    concat_df.to_excel(os.path.join(concat_xl_dir, concat_filename))
 
 
 def main():
-
     abs_spg_dirs = get_abs_spg_dirs(r"C:\Users\jerryw\Desktop\06-29-18 Product Index")
-    mp_func(concat_spg_csv, abs_spg_dirs, has_return=False)
+    concat_xl_dir = r"C:\Users\jerryw\Desktop\06-29-18 Product Index Concat XL"
+    mp_func(concat_spg_csv, abs_spg_dirs, has_return=False, sec_arg=concat_xl_dir)
 
 
 if __name__ == '__main__':
