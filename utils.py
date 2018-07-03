@@ -1,4 +1,5 @@
 import multiprocessing as mp
+from multiprocessing.dummy import Pool
 from functools import partial
 import os
 import pandas as pd
@@ -40,7 +41,7 @@ class Queue:
         return str(self.items)
 
 
-def init_webdriver(hromedriver_path=CHROMEDRIVER_PATH):
+def init_webdriver(chromedriver_path=CHROMEDRIVER_PATH):
     """
     Initialize a chrome webdriver for parsing HTML and interacting with web elements.
     """
@@ -74,8 +75,15 @@ def get_soup(url):
     return resp.status_code, soup
 
 
-def mp_func(func, iterable, sec_arg=None, has_return=True):
-    pool = mp.Pool()
+def mp_func(func, iterable, mode, sec_arg=None, has_return=True):
+    if mode == 'thread':
+        pool = Pool()
+    elif mode == 'process':
+        pool = mp.Pool()
+    else:
+        print("Please use a valid mode: 'thread' or 'process'")
+        return
+
     if sec_arg is not None:
         if has_return:
             return pool.map(partial(func, sec_arg), iterable)
@@ -119,7 +127,7 @@ def concat_spg_csv(abs_spg_dir, concat_xl_dir):
 def main():
     abs_spg_dirs = get_abs_spg_dirs(r"C:\Users\jerryw\Desktop\06-29-18 Product Index")
     concat_xl_dir = r"C:\Users\jerryw\Desktop\06-29-18 Product Index Concat XL"
-    mp_func(concat_spg_csv, abs_spg_dirs, has_return=False, sec_arg=concat_xl_dir)
+    mp_func(concat_spg_csv, abs_spg_dirs, has_return=False, sec_arg=concat_xl_dir, mode='process')
 
 
 if __name__ == '__main__':

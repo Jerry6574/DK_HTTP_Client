@@ -6,7 +6,6 @@ from selenium import webdriver
 import pandas as pd
 from selenium.common.exceptions import StaleElementReferenceException, WebDriverException
 import time
-import multiprocessing as mp
 
 DESKTOP = os.path.join(os.environ['USERPROFILE'], 'Desktop')
 PRODUCT_INDEX_PATH = os.path.join(DESKTOP, "product_index_" + datetime.datetime.now().strftime("%Y%m%d-%H"))
@@ -99,7 +98,7 @@ class DKDL:
 
     def dl_all(self):
         dl_spg_list = self.enum_dl_spg()
-        mp_func(self.dl_page, dl_spg_list, has_return=False)
+        mp_func(self.dl_page, dl_spg_list, has_return=False, mode='thread')
 
     def enum_dl_spg(self):
         dl_spg_list = []
