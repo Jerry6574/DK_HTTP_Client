@@ -65,7 +65,7 @@ def select_active_spg(dl_spg_df_in):
 
 def find_supplier_spg_status(supplier_spg_url):
 
-    browser = init_webdriver(mode='scrape')
+    browser = init_webdriver()
     browser.get(supplier_spg_url)
     try:
         part_status = "".join(browser.find_element_by_id('part-status').text.split())
@@ -94,7 +94,7 @@ def get_num_page(dl_spg_df_in):
         spg_row = spg_url_queue.dequeue()
         [index, spg_url] = spg_row
 
-        browser = init_webdriver(mode='scrape')
+        browser = init_webdriver()
 
         try:
             browser.get(spg_url)

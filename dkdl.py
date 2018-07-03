@@ -1,10 +1,12 @@
 import os
 import datetime
 import math
-from utils import CHROMEDRIVER_PATH, init_webdriver, mp_func
+from utils import CHROMEDRIVER_PATH, mp_func
+from selenium import webdriver
 import pandas as pd
 from selenium.common.exceptions import StaleElementReferenceException, WebDriverException
 import time
+import multiprocessing as mp
 
 DESKTOP = os.path.join(os.environ['USERPROFILE'], 'Desktop')
 PRODUCT_INDEX_PATH = os.path.join(DESKTOP, "product_index_" + datetime.datetime.now().strftime("%Y%m%d-%H"))
@@ -25,7 +27,6 @@ class DKDL:
             self.product_index_path = product_index_path
 
         self.dl_spg_df = pd.read_excel(self.dl_spg_path)
-        self.
 
     def get_dl_path(self, spg_data):
         spg_url = spg_data[0]
@@ -40,14 +41,23 @@ class DKDL:
         return dl_path
 
     def dl_page(self, spg_data):
+        # lock = mp.Lock()
+        # lock.acquire()
+
         spg_url = spg_data[0]
         dl_path = self.get_dl_path(spg_data)
 
         load_url_attempts = 1
 
+        os.environ['webdriver.chrome.driver'] = self.chromedriver_path
+        prefs = {"download.default_directory": dl_path}
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_experimental_option("prefs", prefs)
+        chrome_options.add_argument('--dns-prefetch-disable')
+
         while load_url_attempts <= 5:
             try:
-                browser = init_webdriver(mode='dl', dl_path=dl_path)
+                browser = webdriver.Chrome(executable_path=self.chromedriver_path, options=chrome_options)
                 break
 
             except (WebDriverException, StaleElementReferenceException):
@@ -59,33 +69,33 @@ class DKDL:
                 load_url_attempts += 1
 
         dl_attempts = 1
+
         while dl_attempts <= 15:
             try:
                 browser.set_page_load_timeout(60)
                 browser.get(spg_url)
                 browser.implicitly_wait(2)
-                # browser.maximize_window()
 
                 dl_xpath = "//*[@id='content']/div[@class='mid-wrapper']" \
                            "/div[@class='dload-btn']" \
                            "/form[@class='download-table']" \
                            "/input[@class='button']"
-
+                time.sleep(3)
                 browser.find_element_by_xpath(dl_xpath).click()
-                browser.implicitly_wait(2)
-
                 break
 
-            except (WebDriverException, StaleElementReferenceException):
+            except (WebDriverException, StaleElementReferenceException) as e:
+                print(e)
                 if dl_attempts < 15:
                     print('spg_url', spg_url, 'crashed.', 'dl attempt:', dl_attempts)
                 else:
                     print('spg_url', spg_url, 'all dl attempts have crashed.')
                 dl_attempts += 1
+                time.sleep(1)
 
-        time.sleep(6)
+        time.sleep(5)
         browser.quit()
-        time.sleep(1)
+        # lock.release()
 
     def dl_all(self):
         dl_spg_list = self.enum_dl_spg()
@@ -98,9 +108,13 @@ class DKDL:
                 dl_spg_list.append([url + '?&page=' + str(i) + '&pageSize=500', i])
         return dl_spg_list
 
+
 def main():
     dkdl = DKDL(r"metadata/dl_spg.xlsx")
     dkdl.dl_all()
 
+
 if __name__ == '__main__':
+    t1 = time.time()
     main()
+    print(time.time() - t1, 'seconds')

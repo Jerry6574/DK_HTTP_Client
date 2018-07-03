@@ -19,7 +19,7 @@ def get_supplier_df(supplier_center_url=SUPPLIER_CENTER_URL, export=False, expor
     :return: supplier_df, supplier DataFrame, 
     has columns=['supplier', 'supplier_url', 'supplier_code', 'supplier_id']
     """
-    browser = init_webdriver(mode='scrape')
+    browser = init_webdriver()
     browser.get(supplier_center_url)
 
     # Collect a list of supplier anchor tags.

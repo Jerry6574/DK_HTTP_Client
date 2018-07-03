@@ -40,23 +40,15 @@ class Queue:
         return str(self.items)
 
 
-def init_webdriver(mode, chromedriver_path=CHROMEDRIVER_PATH, dl_path=None):
+def init_webdriver(hromedriver_path=CHROMEDRIVER_PATH):
     """
     Initialize a chrome webdriver for parsing HTML and interacting with web elements.
     """
+    # Launch webdriver as a headless browser.
     chrome_options = Options()
-    if mode == 'scrape':
-        # Launch webdriver as a headless browser.
-
-        chrome_options.add_argument("--headless")
-
-    elif mode == 'dl':
-        os.environ['webdriver.chrome.driver'] = chromedriver_path
-        prefs = {"download.default_directory": dl_path}
-        chrome_options.add_experimental_option("prefs", prefs)
-        chrome_options.add_argument('--dns-prefetch-disable')
-
+    chrome_options.add_argument("--headless")
     browser = webdriver.Chrome(executable_path=chromedriver_path, options=chrome_options)
+
     return browser
 
 
@@ -83,7 +75,7 @@ def get_soup(url):
 
 
 def mp_func(func, iterable, sec_arg=None, has_return=True):
-    pool = mp.Pool(4)
+    pool = mp.Pool()
     if sec_arg is not None:
         if has_return:
             return pool.map(partial(func, sec_arg), iterable)
