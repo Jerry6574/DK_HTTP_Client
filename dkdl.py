@@ -53,9 +53,6 @@ class DKDL:
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_experimental_option("prefs", prefs)
         chrome_options.add_argument('--dns-prefetch-disable')
-        # chrome_options.add_argument("--headless")
-        # chrome_options.add_argument("--disable-gpu")
-        # chrome_options.add_argument("window-size=1920,1080")
 
         while load_url_attempts <= 5:
             try:
