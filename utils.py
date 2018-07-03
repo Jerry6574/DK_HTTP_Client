@@ -3,6 +3,83 @@ from functools import partial
 import os
 import pandas as pd
 import time
+import bs4
+from requests.adapters import HTTPAdapter
+from urllib3.util import Retry
+import requests
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+
+
+CHROMEDRIVER_PATH = r"lib/chromedriver"
+
+
+class Queue:
+    """
+    Implement a FIFO queue data structure.
+    """
+    def __init__(self, initial_queue=None):
+        if initial_queue is None:
+            self.items = []
+        else:
+            self.items = initial_queue
+
+    def empty(self):
+        return self.items == []
+
+    def enqueue(self, item):
+        self.items.insert(0, item)
+
+    def dequeue(self):
+        return self.items.pop()
+
+    def size(self):
+        return len(self.items)
+
+    def __str__(self):
+        return str(self.items)
+
+
+def init_webdriver(mode, chromedriver_path=CHROMEDRIVER_PATH, dl_path=None):
+    """
+    Initialize a chrome webdriver for parsing HTML and interacting with web elements.
+    """
+    chrome_options = Options()
+    if mode == 'scrape':
+        # Launch webdriver as a headless browser.
+
+        chrome_options.add_argument("--headless")
+
+    elif mode == 'dl':
+        os.environ['webdriver.chrome.driver'] = chromedriver_path
+        prefs = {"download.default_directory": dl_path}
+        chrome_options.add_experimental_option("prefs", prefs)
+        chrome_options.add_argument('--dns-prefetch-disable')
+
+    browser = webdriver.Chrome(executable_path=chromedriver_path, options=chrome_options)
+    return browser
+
+
+def get_soup(url):
+    """
+    Given a url, send an http request.
+    :return: resp.status_code, soup
+    resp.status_code is the response's status code, i.e. 200: success, 404: Not Found, 403: Forbidden, etc.
+    soup is a BeautifulSoup object of the input url.
+    """
+    print('url:', url)
+    session = requests.Session()
+    retry = Retry(connect=5, backoff_factor=2)
+    adapter = HTTPAdapter(max_retries=retry)
+
+    session.mount('http://', adapter)
+    session.mount('https://', adapter)
+
+    resp = session.get(url)
+    soup = bs4.BeautifulSoup(resp.content, 'lxml')
+
+    print('status_code:', resp.status_code)
+    return resp.status_code, soup
 
 
 def mp_func(func, iterable, sec_arg=None, has_return=True):
