@@ -53,13 +53,18 @@ class DKDL:
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_experimental_option("prefs", prefs)
         chrome_options.add_argument('--dns-prefetch-disable')
+        # chrome_options.add_argument("--headless")
+        # chrome_options.add_argument("--disable-gpu")
+        # chrome_options.add_argument("window-size=1920,1080")
 
         while load_url_attempts <= 5:
             try:
                 browser = webdriver.Chrome(executable_path=self.chromedriver_path, options=chrome_options)
+
                 break
 
-            except (WebDriverException, StaleElementReferenceException):
+            except (WebDriverException, StaleElementReferenceException) as e:
+                print(e)
                 if load_url_attempts < 5:
                     print('spg_url', spg_url, 'crashed.', 'Load attempt:', load_url_attempts)
                 else:
