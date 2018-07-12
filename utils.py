@@ -124,10 +124,29 @@ def concat_spg_csv(abs_spg_dir, concat_xl_dir):
     concat_df.to_excel(os.path.join(concat_xl_dir, concat_filename))
 
 
+def intersect(n_list):
+    result = set.intersection(*map(set, n_list))
+    return result
+
+
 def main():
-    abs_spg_dirs = get_abs_spg_dirs(r"C:\Users\jerryw\Desktop\06-29-18 Product Index")
-    concat_xl_dir = r"C:\Users\jerryw\Desktop\06-29-18 Product Index Concat XL"
-    mp_func(concat_spg_csv, abs_spg_dirs, has_return=False, sec_arg=concat_xl_dir, mode='process')
+    # abs_spg_dirs = get_abs_spg_dirs(r"C:\Users\jerryw\Desktop\06-29-18 Product Index")
+    # concat_xl_dir = r"C:\Users\jerryw\Desktop\06-29-18 Product Index Concat XL"
+    # mp_func(concat_spg_csv, abs_spg_dirs, has_return=False, sec_arg=concat_xl_dir, mode='process')
+
+    concat_xl_path = r"C:\Users\jerryw\Desktop\AWSW and Competitor Product on DK Concat XL 2018-06-29"
+    concat_xl_files = os.listdir(concat_xl_path)
+
+    n_cols = []
+    for xl in concat_xl_files:
+        df = pd.read_excel(os.path.join(concat_xl_path, xl))
+        print('reading:', xl)
+        col = df.columns.tolist()
+
+        n_cols.append(col)
+
+    intersect_cols = intersect(n_cols)
+    print(intersect_cols)
 
 
 if __name__ == '__main__':
