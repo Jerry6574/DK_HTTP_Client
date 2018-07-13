@@ -1,0 +1,1 @@
+['@ qty', 'Factory Stock', 'Datasheets', 'Digi-Key Part Number', 'Manufacturer', 'Manufacturer Part Number', 'Quantity Available', 'Series', 'Part Status', 'Minimum Quantity', 'Description', 'Image', 'Unit Price (USD)']
