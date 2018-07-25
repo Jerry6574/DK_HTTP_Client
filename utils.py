@@ -135,18 +135,43 @@ def intersect(n_list):
     return result
 
 
+def extract_cols(file_path, mode='price'):
+    intersect_cols = ['Digi-Key Part Number', 'Manufacturer', 'Manufacturer Part Number', 'Quantity Available',
+                      'Unit Price (USD)', 'Datasheets', 'Series', 'Part Status', 'Minimum Quantity',
+                      'Description', 'Image', '@ qty', 'Factory Stock']
+    price_cols = ['Digi-Key Part Number', 'Unit Price (USD)', 'Part Status']
+
+    print("Working on", file_path)
+    if mode == 'intersect':
+        df_intersect_cols = pd.read_excel(file_path)[intersect_cols]
+
+    elif mode == 'price':
+        df_intersect_cols = pd.read_excel(file_path)[price_cols]
+
+    else:
+        raise ValueError("Must use intersect or price mode. ")
+    return df_intersect_cols
+
+
+def concat_spg(read_dir):
+    relative_dirs = os.listdir(read_dir)
+    abs_dirs = [os.path.join(read_dir, spg_dir) for spg_dir in relative_dirs]
+
+    df_list_intersect_cols = mp_func(extract_cols, abs_dirs, mode="process")
+
+    df_concat_intersect_cols = pd.concat(df_list_intersect_cols, ignore_index=True)
+
+    return df_concat_intersect_cols
+
+
 def main():
-    # abs_spg_dirs = get_abs_spg_dirs(r"C:\Users\jerryw\Desktop\06-29-18 Product Index")
-    # concat_xl_dir = r"C:\Users\jerryw\Desktop\06-29-18 Product Index Concat XL"
+    # abs_spg_dirs = get_abs_spg_dirs(r"C:\Users\jerryw\Desktop\AWSW and Competitor Product on DK 2018-06-29")
+    # concat_xl_dir = r"C:\Users\jerryw\Desktop\07-20-18 Product Index Concat XL"
+    #
     # mp_func(concat_spg_csv, abs_spg_dirs, has_return=False, sec_arg=concat_xl_dir, mode='process')
 
-    concat_xl_path = r"C:\Users\jerryw\Desktop\AWSW and Competitor Product on DK Concat XL 2018-06-29"
-    concat_xl_files = os.listdir(concat_xl_path)
-    concat_xl_files = [os.path.join(concat_xl_path, xl_file) for xl_file in concat_xl_files]
-
-    n_cols = mp_func(df_columns, concat_xl_files, mode='process', has_return=True)
-
-    print(intersect(n_cols))
+    df_concat_intersect_cols = concat_spg(r"C:\Users\jerryw\Desktop\product_index_20180703-20 concat xl")
+    df_concat_intersect_cols.to_csv(r"C:\Users\jerryw\Desktop\df_concat_intersect_cols.csv")
 
 
 if __name__ == '__main__':
