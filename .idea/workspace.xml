@@ -2,8 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6f0c2f9d-3cc8-4063-a3a1-b6262f248d3b" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/pi_db.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/dkdb.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dkdl.py" beforeDir="false" afterPath="$PROJECT_DIR$/dkdl.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/metadata.py" beforeDir="false" afterPath="$PROJECT_DIR$/prelim_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/metadata/dl_spg.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/metadata/pg.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/metadata/spg.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/metadata/supplier.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/metadata/supplier_spg.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/metadb.py" beforeDir="false" afterPath="$PROJECT_DIR$/prelim_db.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
     </list>
     <ignored path=".idea/" />
@@ -17,20 +25,25 @@
     <session id="1369453199">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="1" />
+          <entry key="project.closed" value="5" />
           <entry key="project.open.time.12" value="1" />
+          <entry key="project.open.time.25" value="1" />
           <entry key="project.open.time.28" value="1" />
-          <entry key="project.opened" value="2" />
+          <entry key="project.open.time.42" value="1" />
+          <entry key="project.open.time.53" value="1" />
+          <entry key="project.opened" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="692" />
+          <entry key="dummy" value="19" />
+          <entry key="py" value="917" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="692" />
+          <entry key="PLAIN_TEXT" value="19" />
+          <entry key="Python" value="917" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
@@ -47,27 +60,35 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dkdl.py">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/prelim_data.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2850">
-              <caret line="121" selection-start-line="121" selection-end-line="121" />
+            <state relative-caret-position="525">
+              <caret line="81" column="28" lean-forward="true" selection-start-line="81" selection-start-column="28" selection-end-line="81" selection-end-column="28" />
               <folding>
-                <element signature="e#0#9#0" expanded="true" />
+                <element signature="e#0#19#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/metadb.py">
-          <provider selected="true" editor-type-id="text-editor" />
+        <entry file="file://$PROJECT_DIR$/prelim_db.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1581">
+              <caret line="14" column="30" selection-start-line="14" selection-start-column="30" selection-end-line="14" selection-end-column="30" />
+              <folding>
+                <element signature="e#0#19#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/prep_dl.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
+            <state relative-caret-position="1969">
+              <caret line="116" lean-forward="true" selection-start-line="116" selection-end-line="116" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -76,23 +97,26 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/metadata.py">
+        <entry file="file://$PROJECT_DIR$/dkdl.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="500">
-              <caret line="23" selection-start-line="23" selection-end-line="23" />
+            <state relative-caret-position="-462">
+              <caret line="82" column="17" selection-start-line="82" selection-start-column="17" selection-end-line="82" selection-end-column="17" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="74">
-              <caret line="146" column="6" selection-start-line="146" selection-start-column="6" selection-end-line="146" selection-end-column="6" />
+            <state relative-caret-position="100">
+              <caret line="61" column="7" selection-start-line="61" selection-start-column="7" selection-end-line="61" selection-end-column="7" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
-                <marker date="1532552975495" expanded="true" signature="4359:4681" ph="..." />
-                <marker date="1532552975495" expanded="true" signature="4692:4697" ph="..." />
+                <marker date="1532643823774" expanded="true" signature="4286:4608" ph="..." />
+                <marker date="1532643823774" expanded="true" signature="4621:4628" ph="..." />
               </folding>
             </state>
           </provider>
@@ -129,6 +153,7 @@
       <find>data/</find>
       <find>ini</find>
       <find>drop</find>
+      <find>meta</find>
     </findStrings>
     <replaceStrings>
       <replace>metadata/</replace>
@@ -150,11 +175,13 @@
         <option value="$PROJECT_DIR$/../Python Project/dkdl/dkdl.py" />
         <option value="$PROJECT_DIR$/preprocessing.py" />
         <option value="$PROJECT_DIR$/metadb.py" />
-        <option value="$PROJECT_DIR$/metadata.py" />
         <option value="$PROJECT_DIR$/prep_dl.py" />
-        <option value="$PROJECT_DIR$/dkdl.py" />
         <option value="$PROJECT_DIR$/pi_db.py" />
+        <option value="$PROJECT_DIR$/metadata.py" />
+        <option value="$PROJECT_DIR$/prelimdb.py" />
+        <option value="$PROJECT_DIR$/dkdl.py" />
         <option value="$PROJECT_DIR$/utils.py" />
+        <option value="$PROJECT_DIR$/prelim_data.py" />
       </list>
     </option>
   </component>
@@ -187,7 +214,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -199,6 +225,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -217,7 +244,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.utils">
+  <component name="RunManager" selected="Python.prelim_data">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -293,7 +320,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/metadata.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\jerryw\Desktop\DK_HTTP_Client\prelim_data.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -302,7 +329,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="preprocessing" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="prelim_data" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="DK_HTTP_Client" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -314,7 +341,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="C:\Users\Jerry Wu\Desktop\DK_HTTP_Client\metadata.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/prelim_data.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -361,17 +388,17 @@
     <list>
       <item itemvalue="Python.dkdl" />
       <item itemvalue="Python.dl_app" />
-      <item itemvalue="Python.preprocessing" />
       <item itemvalue="Python.utils" />
       <item itemvalue="Python.metadata" />
+      <item itemvalue="Python.prelim_data" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.utils" />
+        <item itemvalue="Python.prelim_data" />
         <item itemvalue="Python.dkdl" />
+        <item itemvalue="Python.utils" />
         <item itemvalue="Python.metadata" />
         <item itemvalue="Python.dl_app" />
-        <item itemvalue="Python.preprocessing" />
       </list>
     </recent_temporary>
   </component>
@@ -397,7 +424,7 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32749325" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.21024258" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.20080863" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -463,35 +490,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dkdl.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2850">
-          <caret line="121" selection-start-line="121" selection-end-line="121" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/metadb.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/prep_dl.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/metadata.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="500">
-          <caret line="23" selection-start-line="23" selection-end-line="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pi_db.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
@@ -502,14 +500,54 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/prelim_db.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1581">
+          <caret line="14" column="30" selection-start-line="14" selection-start-column="30" selection-end-line="14" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/prep_dl.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1969">
+          <caret line="116" lean-forward="true" selection-start-line="116" selection-end-line="116" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dkdl.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-462">
+          <caret line="82" column="17" selection-start-line="82" selection-start-column="17" selection-end-line="82" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="74">
-          <caret line="146" column="6" selection-start-line="146" selection-start-column="6" selection-end-line="146" selection-end-column="6" />
+        <state relative-caret-position="100">
+          <caret line="61" column="7" selection-start-line="61" selection-start-column="7" selection-end-line="61" selection-end-column="7" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
-            <marker date="1532552975495" expanded="true" signature="4359:4681" ph="..." />
-            <marker date="1532552975495" expanded="true" signature="4692:4697" ph="..." />
+            <marker date="1532643823774" expanded="true" signature="4286:4608" ph="..." />
+            <marker date="1532643823774" expanded="true" signature="4621:4628" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/prelim_data.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="81" column="28" lean-forward="true" selection-start-line="81" selection-start-column="28" selection-end-line="81" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
           </folding>
         </state>
       </provider>

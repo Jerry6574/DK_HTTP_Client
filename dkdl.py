@@ -94,7 +94,7 @@ class DKDL:
                 dl_attempts += 1
                 time.sleep(1)
 
-        time.sleep(5)
+        time.sleep(7)
         browser.quit()
         # lock.release()
 
@@ -111,7 +111,7 @@ class DKDL:
 
 
 def main():
-    dkdl = DKDL(r"metadata/dl_spg.xlsx")
+    dkdl = DKDL(r"prelim_data/dl_spg.xlsx")
     dkdl.dl_all()
 
 

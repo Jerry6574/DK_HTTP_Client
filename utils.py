@@ -60,7 +60,6 @@ def get_soup(url):
     resp.status_code is the response's status code, i.e. 200: success, 404: Not Found, 403: Forbidden, etc.
     soup is a BeautifulSoup object of the input url.
     """
-    print('url:', url)
     session = requests.Session()
     retry = Retry(connect=5, backoff_factor=2)
     adapter = HTTPAdapter(max_retries=retry)
@@ -71,7 +70,6 @@ def get_soup(url):
     resp = session.get(url)
     soup = bs4.BeautifulSoup(resp.content, 'lxml')
 
-    print('status_code:', resp.status_code)
     return resp.status_code, soup
 
 
@@ -164,18 +162,18 @@ def concat_spg(read_dir):
     return df_concat_intersect_cols
 
 
-def main():
-    # abs_spg_dirs = get_abs_spg_dirs(r"C:\Users\jerryw\Desktop\AWSW and Competitor Product on DK 2018-06-29")
-    # concat_xl_dir = r"C:\Users\jerryw\Desktop\07-20-18 Product Index Concat XL"
-    #
-    # mp_func(concat_spg_csv, abs_spg_dirs, has_return=False, sec_arg=concat_xl_dir, mode='process')
-
-    df_concat_intersect_cols = concat_spg(r"C:\Users\jerryw\Desktop\product_index_20180703-20 concat xl")
-    df_concat_intersect_cols.to_csv(r"C:\Users\jerryw\Desktop\df_concat_intersect_cols.csv")
-
-
-if __name__ == '__main__':
-    t1 = time.time()
-    main()
-    t2 = time.time() - t1
-    print("Took", t2, "seconds")
+# def main():
+#     # abs_spg_dirs = get_abs_spg_dirs(r"C:\Users\jerryw\Desktop\AWSW and Competitor Product on DK 2018-06-29")
+#     # concat_xl_dir = r"C:\Users\jerryw\Desktop\07-20-18 Product Index Concat XL"
+#     #
+#     # mp_func(concat_spg_csv, abs_spg_dirs, has_return=False, sec_arg=concat_xl_dir, mode='process')
+#
+#     df_concat_intersect_cols = concat_spg(r"C:\Users\jerryw\Desktop\product_index_20180703-20 concat xl")
+#     df_concat_intersect_cols.to_csv(r"C:\Users\jerryw\Desktop\df_concat_intersect_cols.csv")
+#
+#
+# if __name__ == '__main__':
+#     t1 = time.time()
+#     main()
+#     t2 = time.time() - t1
+#     print("Took", t2, "seconds")

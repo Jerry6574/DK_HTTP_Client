@@ -1,11 +1,11 @@
 import pandas as pd
 import sqlite3
-import metadata
+import prelim_data
 
-DB_PATH = r"db/metadb.db"
+DB_PATH = r"db/prelim_db.db"
 
 
-class MetaDB:
+class PrelimDB:
 
     def __init__(self, db_path=DB_PATH):
         self.db_path = db_path
@@ -45,7 +45,7 @@ class MetaDB:
         cursor.close()
         conn.close()
 
-    def insert_pg(self, pg_path=metadata.PG_PATH):
+    def insert_pg(self, pg_path=prelim_data.PG_PATH):
         conn = sqlite3.connect(self.db_path)
 
         pg_df = pd.read_excel(pg_path)
@@ -54,7 +54,7 @@ class MetaDB:
         conn.commit()
         conn.close()
 
-    def insert_spg(self, spg_path=metadata.SPG_PATH):
+    def insert_spg(self, spg_path=prelim_data.SPG_PATH):
         conn = sqlite3.connect(self.db_path)
 
         spg_df = pd.read_excel(spg_path)
@@ -63,7 +63,7 @@ class MetaDB:
         conn.commit()
         conn.close()
 
-    def insert_supplier(self, supplier_path=metadata.SUPPLIER_PATH):
+    def insert_supplier(self, supplier_path=prelim_data.SUPPLIER_PATH):
         conn = sqlite3.connect(self.db_path)
 
         supplier_df = pd.read_excel(supplier_path)
@@ -73,7 +73,7 @@ class MetaDB:
         conn.commit()
         conn.close()
 
-    def insert_supplier_spg(self, supplier_spg_path=metadata.SUPPLIER_SPG_PATH):
+    def insert_supplier_spg(self, supplier_spg_path=prelim_data.SUPPLIER_SPG_PATH):
         conn = sqlite3.connect(self.db_path)
 
         supplier_spg_df = pd.read_excel(supplier_spg_path)
@@ -84,15 +84,15 @@ class MetaDB:
         conn.close()
 
     def insert_all(self):
-        MetaDB.insert_pg(self)
-        MetaDB.insert_spg(self)
-        MetaDB.insert_supplier(self)
-        MetaDB.insert_supplier_spg(self)
+        PrelimDB.insert_pg(self)
+        PrelimDB.insert_spg(self)
+        PrelimDB.insert_supplier(self)
+        PrelimDB.insert_supplier_spg(self)
 
 
 def main():
-    metadb = MetaDB()
-    metadb.insert_all()
+    prelim_db = PrelimDB()
+    prelim_db.insert_all()
 
 
 if __name__ == '__main__':

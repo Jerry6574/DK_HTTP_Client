@@ -1,14 +1,14 @@
 import pandas as pd
 import re
 import time
-from utils import get_soup, init_webdriver
+from utils import get_soup, init_webdriver, mp_func
 
 
-SUPPLIER_PATH = r"metadata/supplier.xlsx"
+SUPPLIER_PATH = r"prelim_data/supplier.xlsx"
 DIGIKEY_HOME_PAGE = "https://www.digikey.com"
-PG_PATH = r"metadata/pg.xlsx"
-SPG_PATH = r"metadata/spg.xlsx"
-SUPPLIER_SPG_PATH = r'metadata/supplier_spg.xlsx'
+PG_PATH = r"prelim_data/pg.xlsx"
+SPG_PATH = r"prelim_data/spg.xlsx"
+SUPPLIER_SPG_PATH = r'prelim_data/supplier_spg.xlsx'
 PRODUCT_INDEX_URL = 'https://www.digikey.com/products/en'
 SUPPLIER_CENTER_URL = 'https://www.digikey.com/en/supplier-centers'
 
@@ -34,16 +34,17 @@ def get_supplier_df(supplier_center_url=SUPPLIER_CENTER_URL, export=False, expor
         supplier_url_key = supplier_url.split('/')[-1]
         supplier_list.append([supplier, supplier_url, supplier_url_key])
 
-    browser.quit()
-
     supplier_df = pd.DataFrame(supplier_list, columns=['supplier', 'supplier_url', 'supplier_url_key'])
-    supplier_codes = []
-    for url in supplier_df['supplier_url']:
-        supplier_code = get_supplier_code(url)
-        print('supplier_code:', supplier_code)
-        supplier_codes.append(supplier_code)
-        time.sleep(0.1)
+    # supplier_codes = []
+    # for url in supplier_df['supplier_url']:
+    #     supplier_code = get_supplier_code(url)
+    #     print('supplier_code:', supplier_code)
+    #     supplier_codes.append(supplier_code)
+    #     time.sleep(0.1)
 
+    supplier_codes = mp_func(get_supplier_code, supplier_df.supplier_url.tolist(), mode='thread')
+
+    browser.quit()
     supplier_df['supplier_code'] = supplier_codes
 
     # Set index to start from 1.
@@ -66,7 +67,9 @@ def get_supplier_code(supplier_url):
     :return: supplier_code if exist, else 'NaN'
     """
     supplier_code_pattern = re.compile(r'v=.+')
-    _, soup = get_soup(supplier_url)
+    status_code, soup = get_soup(supplier_url)
+    print('supplier_url', supplier_url, '\n', 'status_code', status_code)
+
     try:
         # Find first sub-product group url.
         spg_url = soup.find('table', attrs={'id': 'table_arw_wrapper'}).find('li').find('a')['href']
@@ -196,7 +199,7 @@ def get_supplier_spg_df(supplier_path=SUPPLIER_PATH, spg_path=SPG_PATH, pg_path=
     return supplier_spg_df
 
 
-def get_all_meta_data():
+def get_all_prelim_data():
     get_supplier_df(export=True)
     get_pg_df(export=True)
     get_spg_df(export=True)
@@ -204,7 +207,7 @@ def get_all_meta_data():
 
 
 def main():
-    get_all_meta_data()
+    get_supplier_df(export=True)
 
 
 if __name__ == '__main__':
