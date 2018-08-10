@@ -36,12 +36,6 @@ def get_supplier_df(supplier_center_url=SUPPLIER_CENTER_URL, export=False, expor
         supplier_list.append([supplier, supplier_url, supplier_url_key])
 
     supplier_df = pd.DataFrame(supplier_list, columns=['supplier', 'supplier_url', 'supplier_url_key'])
-    # supplier_codes = []
-    # for url in supplier_df['supplier_url']:
-    #     supplier_code = get_supplier_code(url)
-    #     print('supplier_code:', supplier_code)
-    #     supplier_codes.append(supplier_code)
-    #     time.sleep(0.1)
 
     supplier_codes = mp_func(get_supplier_code2, supplier_df.supplier_url.tolist(), mode='thread')
 
@@ -236,7 +230,7 @@ def get_supplier_spg_df2(supplier_path=SUPPLIER_PATH, spg_path=SPG_PATH, pg_path
     supplier_spg_df = pd.concat(supplier_spg_list, ignore_index=True)
     supplier_spg_df = supplier_spg_df.merge(spg_df, on=['pg_url_key', 'spg_url_key'], how='left')
 
-    # supplier_spg_df.drop(columns=['pg_url_key', 'spg_url_key', 'pg_id'], inplace=True)
+    supplier_spg_df.drop(columns=['pg_url_key', 'spg_url_key', 'pg_id'], inplace=True)
 
     supplier_spg_df.index += 1
     supplier_spg_df['supplier_spg_id'] = supplier_spg_df.index

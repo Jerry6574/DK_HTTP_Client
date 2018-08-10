@@ -26,7 +26,7 @@ def get_dl_spg_df(db_path, supplier_id, active_spg=True):
     if active_spg:
         dl_spg_df = select_active_spg(dl_spg_df)
 
-    dl_spg_df = get_num_page(dl_spg_df)
+    dl_spg_df = get_num_page_df(dl_spg_df)
 
     conn.commit()
     conn.close()
@@ -80,7 +80,7 @@ def find_supplier_spg_status(supplier_spg_url):
     return part_status
 
 
-def get_num_page(dl_spg_df_in):
+def get_num_page_df(dl_spg_df_in):
     dl_spg_df_out = dl_spg_df_in
     dl_spg_df_out['num_page'] = 0
     dl_spg_df_out['index'] = dl_spg_df_out.index
@@ -116,9 +116,27 @@ def get_num_page(dl_spg_df_in):
     return dl_spg_df_out
 
 
+def get_num_page_df2():
+
+
+def get_num_page(spg_url):
+    browser = init_webdriver()
+    browser.get(spg_url)
+
+    num_item = int(browser.find_element_by_id('matching-records-count').text.replace(',', ''))
+    num_page = math.ceil(num_item / 500)
+
+    browser.quit()
+
+    return num_page
+
+
 def main():
-    dl_spg = get_dl_spg_df(r"db/prelim_db.db", 80)
-    dl_spg.to_excel(r"prelim_data/dl_spg.xlsx")
+    # dl_spg = get_dl_spg_df(r"db/prelim_db.db", 80)
+    # dl_spg.to_excel(r"prelim_data/dl_spg 80.xlsx")
+
+    spg_url = 'https://www.digikey.com/products/en/cables-wires/single-conductor-cables-hook-up-wire/474'
+    print(get_num_page(spg_url))
 
 
 if __name__ == '__main__':
