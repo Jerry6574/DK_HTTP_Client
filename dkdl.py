@@ -94,7 +94,7 @@ class DKDL:
                 dl_attempts += 1
                 time.sleep(1)
 
-        time.sleep(7)
+        time.sleep(5)
         browser.quit()
         # lock.release()
 

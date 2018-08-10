@@ -114,3 +114,12 @@ def get_num_page(dl_spg_df_in):
     dl_spg_df_out.drop(columns='index', inplace=True)
 
     return dl_spg_df_out
+
+
+def main():
+    dl_spg = get_dl_spg_df(r"db/prelim_db.db", 80)
+    dl_spg.to_excel(r"prelim_data/dl_spg.xlsx")
+
+
+if __name__ == '__main__':
+    main()

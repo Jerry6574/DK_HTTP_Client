@@ -2,6 +2,7 @@ import pandas as pd
 import re
 import time
 from utils import get_soup, init_webdriver, mp_func
+from selenium.common.exceptions import NoSuchElementException
 
 
 SUPPLIER_PATH = r"prelim_data/supplier.xlsx"
@@ -42,7 +43,7 @@ def get_supplier_df(supplier_center_url=SUPPLIER_CENTER_URL, export=False, expor
     #     supplier_codes.append(supplier_code)
     #     time.sleep(0.1)
 
-    supplier_codes = mp_func(get_supplier_code, supplier_df.supplier_url.tolist(), mode='thread')
+    supplier_codes = mp_func(get_supplier_code2, supplier_df.supplier_url.tolist(), mode='thread')
 
     browser.quit()
     supplier_df['supplier_code'] = supplier_codes
@@ -59,6 +60,26 @@ def get_supplier_df(supplier_center_url=SUPPLIER_CENTER_URL, export=False, expor
         return
 
     return supplier_df
+
+
+def get_supplier_code2(supplier_url):
+    print("Processing", supplier_url)
+    browser = init_webdriver()
+    browser.get(supplier_url)
+
+    supplier_code_pattern = re.compile(r'v=.+')
+
+    try:
+        href = browser.find_element_by_id('accordionNav') \
+                      .find_element_by_tag_name('ul') \
+                      .find_element_by_tag_name('a').get_attribute('href')
+        # [2:] to remove "v=" and keep only the supplier code.
+        supplier_code = re.findall(supplier_code_pattern, href.split('/')[-1])[0][2:]
+        browser.quit()
+        return supplier_code
+    except NoSuchElementException:
+        browser.quit()
+        return 'NaN'
 
 
 def get_supplier_code(supplier_url):
@@ -142,11 +163,12 @@ def get_spg_df(pg_path=PG_PATH, export=False, export_path=SPG_PATH):
             spg_list.append([spg, spg_url, spg_url_key, pg_url_key])
 
     spg_df = pd.DataFrame(spg_list, columns=['spg', 'spg_url', 'spg_url_key', 'pg_url_key'])
-    spg_df.index += 1
-    spg_df['spg_id'] = spg_df.index
 
     spg_df = spg_df.merge(pg_lookup, on='pg_url_key', how='left')
     spg_df.drop(columns='pg_url_key', inplace=True)
+
+    spg_df.index += 1
+    spg_df['spg_id'] = spg_df.index
 
     if export is True:
         spg_df.to_excel(export_path)
@@ -174,6 +196,7 @@ def get_supplier_spg_df(supplier_path=SUPPLIER_PATH, spg_path=SPG_PATH, pg_path=
 
     for supplier_id_url in supplier_df.itertuples(index=True, name='Pandas'):
         supplier_id = getattr(supplier_id_url, 'supplier_id')
+        print('Processing supplier_id', supplier_id)
         supplier_url = getattr(supplier_id_url, 'supplier_url')
 
         _, supplier_soup = get_soup(supplier_url)
@@ -199,6 +222,48 @@ def get_supplier_spg_df(supplier_path=SUPPLIER_PATH, spg_path=SPG_PATH, pg_path=
     return supplier_spg_df
 
 
+def get_supplier_spg_df2(supplier_path=SUPPLIER_PATH, spg_path=SPG_PATH, pg_path=PG_PATH,
+                         export=False, export_path=SUPPLIER_SPG_PATH):
+    supplier_df = pd.read_excel(supplier_path)
+    supplier_df = supplier_df[pd.notnull(supplier_df['supplier_code'])]
+
+    pg_df = pd.read_excel(pg_path)[['pg_url_key', 'pg_id']]
+    spg_df = pd.read_excel(spg_path)[['spg_url_key', 'spg_id', 'pg_id']].merge(pg_df, on='pg_id', how='left')
+
+    supplier_id_urls = supplier_df.as_matrix(columns=['supplier_id', 'supplier_url'])
+
+    supplier_spg_list = mp_func(get_url_keys, supplier_id_urls, has_return=True, mode='thread')
+    supplier_spg_df = pd.concat(supplier_spg_list, ignore_index=True)
+    supplier_spg_df = supplier_spg_df.merge(spg_df, on=['pg_url_key', 'spg_url_key'], how='left')
+
+    # supplier_spg_df.drop(columns=['pg_url_key', 'spg_url_key', 'pg_id'], inplace=True)
+
+    supplier_spg_df.index += 1
+    supplier_spg_df['supplier_spg_id'] = supplier_spg_df.index
+
+    if export is True:
+        supplier_spg_df.to_excel(export_path)
+        return
+
+    return supplier_spg_df
+
+
+def get_url_keys(supplier_id_url):
+    [supplier_id, supplier_url] = supplier_id_url
+    print('Processing supplier_id', supplier_id)
+    browser = init_webdriver()
+    browser.get(supplier_url)
+    all_li = browser.find_element_by_id('table_arw_wrapper').find_elements_by_tag_name('li')
+
+    url_keys = [[supplier_id, li.find_element_by_tag_name('a').get_attribute('href').split('/')[-3],
+                 li.find_element_by_tag_name('a').get_attribute('href').split('/')[-2]]
+                for li in all_li]
+    url_keys_df = pd.DataFrame(url_keys, columns=['supplier_id', 'pg_url_key', 'spg_url_key'])
+    browser.quit()
+
+    return url_keys_df
+
+
 def get_all_prelim_data():
     get_supplier_df(export=True)
     get_pg_df(export=True)
@@ -207,7 +272,10 @@ def get_all_prelim_data():
 
 
 def main():
-    get_supplier_df(export=True)
+    # get_supplier_df(export=True)
+    # get_supplier_spg_df(export=True)
+
+    get_supplier_spg_df2(export=True)
 
 
 if __name__ == '__main__':
