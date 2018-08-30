@@ -160,6 +160,3 @@ def concat_spg(read_dir):
     df_concat_intersect_cols = pd.concat(df_list_intersect_cols, ignore_index=True)
 
     return df_concat_intersect_cols
-
-
-

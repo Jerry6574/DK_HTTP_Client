@@ -6,10 +6,14 @@
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/prelim_db.db" beforeDir="false" afterPath="$PROJECT_DIR$/db/prelim_db.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dkdl.py" beforeDir="false" afterPath="$PROJECT_DIR$/dkdl.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/prelim_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/prelim_data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prelim_data/supplier_spg using for loop.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/prelim_data/pg.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/prelim_data/pg.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/prelim_data/spg.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/prelim_data/spg.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/prelim_data/supplier.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/prelim_data/supplier.xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/prelim_data/supplier_spg.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/prelim_data/supplier_spg.xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/prep_dl.py" beforeDir="false" afterPath="$PROJECT_DIR$/prep_dl.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
     </list>
     <ignored path=".idea/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -57,23 +61,33 @@
     <session id="-1864536956">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="1" />
-          <entry key="project.open.time.5" value="1" />
-          <entry key="project.opened" value="1" />
+          <entry key="project.closed" value="7" />
+          <entry key="project.open.time.0" value="2" />
+          <entry key="project.open.time.4" value="4" />
+          <entry key="project.open.time.5" value="2" />
+          <entry key="project.opened" value="8" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="1129" />
+          <entry key="py" value="1295" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="1129" />
+          <entry key="Python" value="1295" />
         </counts>
       </usages-collector>
-      <usages-collector id="statistics.file.extensions.open" />
-      <usages-collector id="statistics.file.types.open" />
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="py" value="8" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="Python" value="8" />
+        </counts>
+      </usages-collector>
     </session>
     <session id="2055493907">
       <usages-collector id="statistics.lifecycle.project">
@@ -109,22 +123,23 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../Crawl_WSW_Web/main.py">
+        <entry file="file://$PROJECT_DIR$/prelim_data.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="250">
-              <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+            <state relative-caret-position="6786">
+              <caret line="265" selection-start-line="265" selection-end-line="265" />
+              <folding>
+                <element signature="e#0#19#0" expanded="true" />
+                <marker date="1535598731495" expanded="true" signature="9873:9914" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../Crawl_WSW_Web/crawler.py">
+        <entry file="file://$PROJECT_DIR$/prelim_db.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1250">
-              <caret line="34" lean-forward="true" selection-start-line="34" selection-end-line="34" />
-              <folding>
-                <element signature="e#0#9#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="2184">
+              <caret line="86" column="32" selection-start-line="86" selection-start-column="32" selection-end-line="86" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -132,13 +147,33 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/prep_dl.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1235">
-              <caret line="119" selection-start-line="119" selection-end-line="119" />
+            <state relative-caret-position="261">
+              <caret line="129" lean-forward="true" selection-start-line="129" selection-end-line="129" />
               <folding>
-                <element signature="e#0#39#0" expanded="true" />
-                <marker date="1533944160559" expanded="true" signature="3928:3931" ph="..." />
-                <marker date="1533944160559" expanded="true" signature="3988:4194" ph="..." />
-                <marker date="1533944160559" expanded="true" signature="4205:4210" ph="..." />
+                <element signature="e#0#49#0" expanded="true" />
+                <marker date="1535604939078" expanded="true" signature="3904:3905" ph="..." />
+                <marker date="1535604939078" expanded="true" signature="4179:4184" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dkdl.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-77">
+              <caret line="76" column="36" lean-forward="true" selection-start-line="76" selection-start-column="36" selection-end-line="76" selection-end-column="36" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/utils.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="377">
+              <caret line="162" selection-start-line="162" selection-end-line="162" />
+              <folding>
+                <element signature="e#0#28#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -189,21 +224,22 @@
         <option value="$PROJECT_DIR$/metadb.py" />
         <option value="$PROJECT_DIR$/metadata.py" />
         <option value="$PROJECT_DIR$/prelimdb.py" />
-        <option value="$PROJECT_DIR$/utils.py" />
         <option value="$PROJECT_DIR$/pi_db.py" />
-        <option value="$PROJECT_DIR$/dkdl.py" />
+        <option value="$USER_HOME$/Crawl_WSW_Web/main.py" />
+        <option value="$USER_HOME$/Crawl_WSW_Web/crawler.py" />
+        <option value="$PROJECT_DIR$/../Programming Projects/Fluent Python/Ch6 Design Patterns with First-Class Functions/promotions.py" />
         <option value="$PROJECT_DIR$/prelim_data.py" />
-        <option value="$PROJECT_DIR$/../../Crawl_WSW_Web/main.py" />
-        <option value="$PROJECT_DIR$/../../Crawl_WSW_Web/crawler.py" />
+        <option value="$PROJECT_DIR$/dkdl.py" />
+        <option value="$PROJECT_DIR$/utils.py" />
         <option value="$PROJECT_DIR$/prep_dl.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-1339" />
-    <option name="y" value="173" />
-    <option name="width" value="1347" />
-    <option name="height" value="724" />
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="57" />
+    <option name="y" value="-27" />
+    <option name="width" value="2583" />
+    <option name="height" value="1404" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -228,6 +264,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -239,11 +276,10 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/.idea" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
@@ -258,7 +294,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.main">
+  <component name="RunManager" selected="Python.dkdl">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -280,7 +316,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="crawler" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="dkdl" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="DK_HTTP_Client" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -288,11 +324,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../Crawl_WSW_Web" />
-      <option name="IS_MODULE_SDK" value="false" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../Crawl_WSW_Web/crawler.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/dkdl.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -309,11 +345,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../Crawl_WSW_Web" />
+      <option name="WORKING_DIRECTORY" value="$USER_HOME$/Crawl_WSW_Web" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../Crawl_WSW_Web/main.py" />
+      <option name="SCRIPT_NAME" value="$USER_HOME$/Crawl_WSW_Web/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -404,15 +440,15 @@
       <item itemvalue="Python.prep_dl" />
       <item itemvalue="Python.prelim_db" />
       <item itemvalue="Python.main" />
-      <item itemvalue="Python.crawler" />
+      <item itemvalue="Python.dkdl" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.main" />
-        <item itemvalue="Python.crawler" />
+        <item itemvalue="Python.dkdl" />
         <item itemvalue="Python.prep_dl" />
         <item itemvalue="Python.prelim_db" />
         <item itemvalue="Python.prelim_data" />
+        <item itemvalue="Python.main" />
       </list>
     </recent_temporary>
   </component>
@@ -439,15 +475,15 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1608" y="173" width="1616" height="876" extended-state="6" />
+    <frame x="-7" y="-7" width="1721" height="935" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19328263" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18543047" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3264642" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.25921908" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.25810474" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -478,66 +514,75 @@
     <entry file="file://$PROJECT_DIR$/../Python Project/dkdl/utils.py" />
     <entry file="file://$PROJECT_DIR$/../Python Project/dkdl/dkdl.py" />
     <entry file="file://$PROJECT_DIR$/pi_db.py" />
-    <entry file="file://$PROJECT_DIR$/dkdl.py">
+    <entry file="file://$USER_HOME$/Crawl_WSW_Web/main.py" />
+    <entry file="file://$USER_HOME$/Crawl_WSW_Web/crawler.py" />
+    <entry file="file://$PROJECT_DIR$/../Programming Projects/Fluent Python/Ch6 Design Patterns with First-Class Functions/promotions.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="644">
-          <caret line="98" column="24" selection-start-line="98" selection-start-column="24" selection-end-line="98" selection-end-column="24" />
+        <state relative-caret-position="494">
+          <caret line="19" column="9" selection-start-line="19" selection-start-column="9" selection-end-line="19" selection-end-column="9" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/prelim_db.py">
+    <entry file="file://$PROJECT_DIR$/../Programming Projects/Python_Tutorial/Python Unit Test Tutorial/test_calc.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1968">
-          <caret line="4" column="10" selection-start-line="4" selection-start-column="10" selection-end-line="4" selection-end-column="28" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
+        <state relative-caret-position="-244" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils.py">
+    <entry file="file://$PROJECT_DIR$/../Programming Projects/Python_Tutorial/Python Unit Test Tutorial/test_employee.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Programming Projects/Python MySQL/src/Ch3 Basic Query Execution/3.2 retrieving rows.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="644">
-          <caret line="151" selection-start-line="151" selection-end-line="151" />
+        <state>
           <folding>
-            <element signature="e#0#28#0" expanded="true" />
+            <element signature="e#0#22#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/prelim_data.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="333">
-          <caret line="232" column="4" lean-forward="true" selection-start-line="232" selection-start-column="4" selection-end-line="232" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../Crawl_WSW_Web/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../Crawl_WSW_Web/crawler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1250">
-          <caret line="34" lean-forward="true" selection-start-line="34" selection-end-line="34" />
+        <state relative-caret-position="6786">
+          <caret line="265" selection-start-line="265" selection-end-line="265" />
           <folding>
-            <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#0#19#0" expanded="true" />
+            <marker date="1535598731495" expanded="true" signature="9873:9914" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/prelim_db.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2184">
+          <caret line="86" column="32" selection-start-line="86" selection-start-column="32" selection-end-line="86" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="377">
+          <caret line="162" selection-start-line="162" selection-end-line="162" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dkdl.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-77">
+          <caret line="76" column="36" lean-forward="true" selection-start-line="76" selection-start-column="36" selection-end-line="76" selection-end-column="36" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/prep_dl.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1235">
-          <caret line="119" selection-start-line="119" selection-end-line="119" />
+        <state relative-caret-position="261">
+          <caret line="129" lean-forward="true" selection-start-line="129" selection-end-line="129" />
           <folding>
-            <element signature="e#0#39#0" expanded="true" />
-            <marker date="1533944160559" expanded="true" signature="3928:3931" ph="..." />
-            <marker date="1533944160559" expanded="true" signature="3988:4194" ph="..." />
-            <marker date="1533944160559" expanded="true" signature="4205:4210" ph="..." />
+            <element signature="e#0#49#0" expanded="true" />
+            <marker date="1535604939078" expanded="true" signature="3904:3905" ph="..." />
+            <marker date="1535604939078" expanded="true" signature="4179:4184" ph="..." />
           </folding>
         </state>
       </provider>

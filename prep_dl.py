@@ -116,9 +116,6 @@ def get_num_page_df(dl_spg_df_in):
     return dl_spg_df_out
 
 
-def get_num_page_df2():
-
-
 def get_num_page(spg_url):
     browser = init_webdriver()
     browser.get(spg_url)
@@ -132,11 +129,11 @@ def get_num_page(spg_url):
 
 
 def main():
-    # dl_spg = get_dl_spg_df(r"db/prelim_db.db", 80)
-    # dl_spg.to_excel(r"prelim_data/dl_spg 80.xlsx")
+    dl_spg = get_dl_spg_df(r"db/prelim_db.db", 80)
+    dl_spg.to_excel(r"prelim_data/dl_spg 80.xlsx")
 
-    spg_url = 'https://www.digikey.com/products/en/cables-wires/single-conductor-cables-hook-up-wire/474'
-    print(get_num_page(spg_url))
+    # spg_url = 'https://www.digikey.com/products/en/cables-wires/single-conductor-cables-hook-up-wire/474'
+    # print(get_num_page(spg_url))
 
 
 if __name__ == '__main__':
