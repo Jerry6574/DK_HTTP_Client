@@ -6,6 +6,7 @@ from selenium import webdriver
 import pandas as pd
 from selenium.common.exceptions import StaleElementReferenceException, WebDriverException
 import time
+import random
 
 DESKTOP = os.path.join(os.environ['USERPROFILE'], 'Desktop')
 PRODUCT_INDEX_PATH = os.path.join(DESKTOP, "product_index_" + datetime.datetime.now().strftime("%Y%m%d-%H"))
@@ -26,6 +27,8 @@ class DKDL:
             self.product_index_path = product_index_path
 
         self.dl_spg_df = pd.read_excel(self.dl_spg_path)
+        self.dl_spg_list = self.enum_dl_spg()
+
 
     def get_dl_path(self, spg_data):
         spg_url = spg_data[0]
@@ -69,38 +72,39 @@ class DKDL:
                     return
                 load_url_attempts += 1
 
-        dl_attempts = 1
+        try:
+            # if random.uniform(0, 1) >= 0.8:
+            #     raise WebDriverException()
 
-        while dl_attempts <= 15:
-            try:
-                browser.set_page_load_timeout(60)
-                browser.get(spg_url)
-                browser.implicitly_wait(2)
+            browser.set_page_load_timeout(20)
+            browser.get(spg_url)
+            browser.implicitly_wait(2)
 
-                dl_xpath = "//*[@id='content']/div[@class='mid-wrapper']" \
-                           "/div[@class='dload-btn']" \
-                           "/form[@class='download-table']" \
-                           "/input[@class='button']"
-                time.sleep(3)
-                browser.find_element_by_xpath(dl_xpath).click()
-                break
+            dl_xpath = "//*[@id='content']/div[@class='mid-wrapper']" \
+                       "/div[@class='dload-btn']" \
+                       "/form[@class='download-table']" \
+                       "/input[@class='button']"
+            time.sleep(3)
+            browser.find_element_by_xpath(dl_xpath).click()
 
-            except (WebDriverException, StaleElementReferenceException) as e:
-                print(e)
-                if dl_attempts < 15:
-                    print('spg_url', spg_url, 'crashed.', 'dl attempt:', dl_attempts)
-                else:
-                    print('spg_url', spg_url, 'all dl attempts have crashed.')
-                dl_attempts += 1
-                time.sleep(1)
+            time.sleep(5)
+            browser.quit()
+            print("Number of downloads left", len(self.dl_spg_list))
+            self.dl_spg_list.remove(spg_data)
+            return
 
-        time.sleep(5)
+        except (WebDriverException, StaleElementReferenceException) as e:
+            print(e)
+            pass
+
         browser.quit()
-        # lock.release()
 
     def dl_all(self):
-        dl_spg_list = self.enum_dl_spg()
-        mp_func(self.dl_page, dl_spg_list, has_return=False, mode='thread')
+        run = 0
+        while len(self.dl_spg_list) != 0:
+            mp_func(self.dl_page, self.dl_spg_list, has_return=False, mode='thread')
+            run += 1
+            print("Complete run", run)
 
     def enum_dl_spg(self):
         dl_spg_list = []
@@ -111,7 +115,7 @@ class DKDL:
 
 
 def main():
-    dkdl = DKDL(r"prelim_data/dl_spg.xlsx")
+    dkdl = DKDL(r"prelim_data/dl_spg 80.xlsx")
     dkdl.dl_all()
 
 

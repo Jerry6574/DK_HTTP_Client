@@ -1,8 +1,9 @@
 from utils import Queue, init_webdriver
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
 import math
 import pandas as pd
 import sqlite3
+import time
 
 
 def get_dl_spg_df(db_path, supplier_id, active_spg=True):
@@ -50,13 +51,14 @@ def select_active_spg(dl_spg_df_in):
 
         try:
             supplier_spg_status = find_supplier_spg_status(supplier_spg_url)
-            if supplier_spg_status == 'Obsolete':
-                dl_spg_df_out.at[index, 'part-status'] = 'Obsolete'
+            if supplier_spg_status != 'Obsolete':
+                dl_spg_df_out.at[index, 'part-status'] = supplier_spg_status
 
-        except NoSuchElementException:
+        except (NoSuchElementException, TimeoutException):
             spg_queue.enqueue(spg_row)
             enqueue_counter += 1
             print('enqueue_counter: ', enqueue_counter)
+        time.sleep(0.5)
 
     dl_spg_df_out = dl_spg_df_out[dl_spg_df_out['part-status'] == 'Active']
     dl_spg_df_out.drop(columns=['index', 'part-status'], inplace=True)
@@ -104,7 +106,7 @@ def get_num_page_df(dl_spg_df_in):
 
             print('spg_url', spg_url, 'num_page', num_page)
             dl_spg_df_out.at[index, 'num_page'] = num_page
-        except NoSuchElementException:
+        except (NoSuchElementException, TimeoutException):
             spg_url_queue.enqueue(spg_row)
             enqueue_counter += 1
             print('enqueue_counter: ', enqueue_counter)

@@ -49,6 +49,7 @@ def init_webdriver(chromedriver_path=CHROMEDRIVER_PATH):
     chrome_options = Options()
     chrome_options.add_argument("--headless")
     browser = webdriver.Chrome(executable_path=chromedriver_path, options=chrome_options)
+    browser.set_page_load_timeout(20)
 
     return browser
 
