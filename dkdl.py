@@ -76,7 +76,7 @@ class DKDL:
             # if random.uniform(0, 1) >= 0.8:
             #     raise WebDriverException()
 
-            browser.set_page_load_timeout(20)
+            browser.set_page_load_timeout(60)
             browser.get(spg_url)
             browser.implicitly_wait(2)
 
