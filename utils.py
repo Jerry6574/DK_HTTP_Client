@@ -49,6 +49,7 @@ def init_webdriver(chromedriver_path=CHROMEDRIVER_PATH):
     chrome_options = Options()
     chrome_options.add_argument("--headless")
     browser = webdriver.Chrome(executable_path=chromedriver_path, options=chrome_options)
+    browser.set_page_load_timeout(20)
 
     return browser
 
@@ -160,6 +161,3 @@ def concat_spg(read_dir):
     df_concat_intersect_cols = pd.concat(df_list_intersect_cols, ignore_index=True)
 
     return df_concat_intersect_cols
-
-
-

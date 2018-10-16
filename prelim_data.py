@@ -247,7 +247,7 @@ def get_url_keys(supplier_id_url):
     print('Processing supplier_id', supplier_id)
     browser = init_webdriver()
     browser.get(supplier_url)
-    all_li = browser.find_element_by_id('table_arw_wrapper').find_elements_by_tag_name('li')
+    all_li = browser.find_element_by_id('accordionTable').find_elements_by_tag_name('li')
 
     url_keys = [[supplier_id, li.find_element_by_tag_name('a').get_attribute('href').split('/')[-3],
                  li.find_element_by_tag_name('a').get_attribute('href').split('/')[-2]]
@@ -262,13 +262,10 @@ def get_all_prelim_data():
     get_supplier_df(export=True)
     get_pg_df(export=True)
     get_spg_df(export=True)
-    get_supplier_spg_df(export=True)
+    get_supplier_spg_df2(export=True)
 
 
 def main():
-    # get_supplier_df(export=True)
-    # get_supplier_spg_df(export=True)
-
     get_supplier_spg_df2(export=True)
 
 
